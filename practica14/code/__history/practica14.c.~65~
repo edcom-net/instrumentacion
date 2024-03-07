@@ -1,0 +1,52 @@
+#include <16F877a.h> //Libreria de controladores del PIC a utilizar 
+#device ADC=10 //Utilizar ADC
+#use delay(crystal=20Mhz) //Utilizar cristal de 20 MegaHertz
+#FUSES NOWDT, NOBROWNOUT, NOLVP
+#include <math.h> //Libreria para realizar operaciones matematicas 
+
+#include <lcd_c.c> //Libreria de LCD en el puerto    
+
+void main (){
+
+   //Definimos variables
+
+   int16 raw_input=0; //ADC
+   float voltage_conv, max_val=0; //Conversion de voltage & voltage rms
+   
+   setup_adc(ADC_CLOCK_INTERNAL); 
+   setup_adc_ports(AN0);
+   
+   lcd_init();
+   
+   //Inicializamos el ADC en el puerto A0 y el LCD
+   
+   printf(lcd_putc,"\fDC VOLTMETER \nVer.2.0");
+   delay_ms(1000);
+   
+   //Pequeña impresion de LCD
+   
+   while(true){
+   for (int16 i=0; i<400; i++){
+         set_adc_channel(0);
+         raw_input = read_adc();
+         voltage_conv = (5.0 * (float)raw_input/1023.0)*5.0;
+         delay_us(20);
+         max_val=voltage_conv*voltage_conv+max_val;
+     
+      }
+   printf(lcd_putc,"\fVoltage: %2.2f V",sqrt(max_val/300));
+   printf(lcd_putc,"\nADC = %4lu",raw_input);
+   max_val=0;
+   raw_input=0;
+      }
+   }
+   
+   //En nuestro while(true) hacemos una iteracion de 300 conteos donde leemos el valor del ADC,
+   //basados en el divisor de voltage y la resolucion del ADC obtenemos el valor de conversion del ADC y lo convertimos a voltaje
+   //con esto obtenemos el valor RMS que es como un promedio de los diferentes voltajes obtenidos
+   //imprimimos en pantalla y reiniciamos conteo.
+
+   
+
+
+

@@ -1,0 +1,6 @@
+Compiling C:\Users\52312\Documents\Actual\instrumentacion\practica7\p7 on 05-Mar-24 at 20:35
+>>> Warning 203 "C:\Users\52312\Documents\Actual\instrumentacion\practica7\p7.c" Line 97(1,1): Condition always TRUE
+>>> Warning 216 "C:\Users\52312\Documents\Actual\instrumentacion\practica7\p7.c" Line 113(1,2): Interrupts disabled during call to prevent re-entrancy:  (@ITOF)
+      Memory usage:   ROM=26%      RAM=12% - 20%
+      0 Errors,  2 Warnings.
+Build Successful.

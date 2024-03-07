@@ -1,0 +1,192 @@
+004-005 @READ_PROGRAM_MEMORY8.P1
+004-005 @WRITE_PROGRAM_MEMORY8.P2
+007     lcdlat
+007     lcd
+008     PSP_DATA
+015     CCP_1
+015     CCP_1_LOW
+016     CCP_1_HIGH
+01B     CCP_2
+01B     CCP_2_LOW
+01C     CCP_2_HIGH
+020-021 @sprintf_string
+022-025 atan2.y
+022-023 MAIN.raw_input
+024-027 MAIN.voltage_conv
+026-029 atan2.x
+028-02B MAIN.max_val
+02A-02D atan2.z
+02C-02D MAIN.i
+02E     lcd_init.i
+02E-02F @ITOF.P1
+02E.0   atan2.sign
+02E-02F @PRINTF_LU_840.P1
+02E     MAIN.@SCRATCH1
+02E     @PSTRINGC7_840.@SCRATCH1
+02F     atan2.quad
+02F     lcd_init.@SCRATCH1
+02F     MAIN.@SCRATCH2
+02F     @PSTRINGC7_840.@SCRATCH2
+030     MAIN.@SCRATCH3
+030     @PSTRINGC7_840.@SCRATCH3
+030     @PRINTF_LU_840.@SCRATCH1
+031     MAIN.@SCRATCH4
+031     @PSTRINGC7_840.@SCRATCH4
+031     @PRINTF_LU_840.@SCRATCH2
+032     @PSTRINGCN7_840.P1
+032-035 @PRINTF_L32D_840FPFPF.P2
+032-035 sqrt.x
+032     @PRINTF_LU_840.@SCRATCH3
+033     @PSTRINGCN7_840.@SCRATCH1
+033     @PRINTF_LU_840.@SCRATCH4
+034     @PSTRINGCN7_840.@SCRATCH2
+034     @PRINTF_LU_840.@SCRATCH5
+035     @PSTRINGCN7_840.@SCRATCH3
+035     @PRINTF_LU_840.@SCRATCH6
+036-039 sqrt.y
+036     @PRINTF_L32D_840FPFPF.P1
+036     @PSTRINGCN7_840.@SCRATCH4
+036     @PRINTF_LU_840.@SCRATCH7
+037     @PRINTF_L32D_840FPFPF.@SCRATCH1
+038     @PRINTF_L32D_840FPFPF.@SCRATCH2
+039     @PRINTF_L32D_840FPFPF.@SCRATCH3
+03A-03D sqrt.res
+03A     @PRINTF_L32D_840FPFPF.@SCRATCH4
+03B     @PRINTF_L32D_840FPFPF.@SCRATCH5
+03C     @PRINTF_L32D_840FPFPF.@SCRATCH6
+03D     @PRINTF_L32D_840FPFPF.@SCRATCH7
+03E-03F sqrt.p
+03E     @PRINTF_L32D_840FPFPF.@SCRATCH8
+03F-042 @MULFF.P1
+03F-042 @FTOSD.P2
+03F-042 @DIV3232.P3
+03F     lcd_putc.c
+040     lcd_gotoxy.x
+040-043 @FLT.P1
+040     @delay_ms1.P2
+040-043 @DIVFF.P3
+040-043 @ADDFF.P4
+040     sqrt.@SCRATCH1
+041     lcd_gotoxy.y
+041     sqrt.@SCRATCH2
+042     lcd_gotoxy.address
+042     sqrt.@SCRATCH3
+043-046 @MULFF.P1
+043-046 @DIV3232.P2
+043     sqrt.@SCRATCH4
+043     lcd_gotoxy.@SCRATCH1
+043     @FTOSD.@SCRATCH1
+044-047 @DIVFF.P1
+044-047 @FLT.P2
+044-047 @ADDFF.P3
+044     lcd_send_byte.address
+045     lcd_send_byte.n
+046     lcd_read_byte.low
+046     lcd_send_byte.@SCRATCH1
+047     lcd_send_nibble.n
+047     lcd_read_byte.high
+047     @MULFF.@SCRATCH1
+047     @DIV3232.@SCRATCH1
+048     @FLT.@SCRATCH1
+048     @MULFF.@SCRATCH2
+048     @ADDFF.@SCRATCH1
+048     @DIVFF.@SCRATCH1
+048     lcd_read_byte.@SCRATCH1
+048     @DIV3232.@SCRATCH2
+049     @FLT.@SCRATCH2
+049     @MULFF.@SCRATCH3
+049     @ADDFF.@SCRATCH2
+049     @DIVFF.@SCRATCH2
+049     @DIV3232.@SCRATCH3
+04A     @MULFF.@SCRATCH4
+04A     @ADDFF.@SCRATCH3
+04A     @DIVFF.@SCRATCH3
+04A     @DIV3232.@SCRATCH4
+04B     @MULFF.@SCRATCH5
+04B     @ADDFF.@SCRATCH4
+04B     @DIVFF.@SCRATCH4
+04B     @DIV3232.@SCRATCH5
+04C     @ADDFF.@SCRATCH5
+04C     @DIVFF.@SCRATCH5
+04D     @ADDFF.@SCRATCH6
+04D     @DIVFF.@SCRATCH6
+04E     @ADDFF.@SCRATCH7
+04F     @ADDFF.@SCRATCH8
+077     @SCRATCH
+078     @SCRATCH
+078     _RETURN_
+079     @SCRATCH
+07A     @SCRATCH
+087     lcdtris
+09C.6   C1OUT
+09C.7   C2OUT
+10D-10E @READ_PROGRAM_MEMORY8.P1
+10D-10E @WRITE_PROGRAM_MEMORY8.P2
+
+ROM Allocation:
+000004  LCD_INIT_STRING.call
+000008  LCD_INIT_STRING.data
+00000C  @const852.call
+000018  @const858.call
+000027  @const859.call
+000030  @const870.call
+000036  @delay_ms1
+00004A  lcd_send_nibble
+000059  lcd_read_nibble
+00005F  lcd_send_byte
+000060  lcd_read_byte
+00009C  lcd_init
+0000CC  lcd_putc
+0000E3  lcd_gotoxy
+000100  @PSTRINGC7_840
+000156  @ITOF
+000175  @MULFF
+0001EA  @DIVFF
+0002B4  @ADDFF
+0003F5  @FLT
+000434  sqrt
+0004C5  @PSTRINGCN7_840
+00051C  @DIV3232
+00056B  @PRINTF_L32D_840FPFPF
+000592  @FTOSD
+00064D  @PRINTF_LU_840
+000800  @cinit1
+000800  MAIN
+00080C  @cinit2
+
+Project Directory:
+    V:\docs external ssd\school\circuits\u2\practica14\practica14\code\
+
+Project Files:
+    practica14.c                                            [28-Feb-24 17:31  CRC=D6CCFFEA]
+    C:\Program Files (x86)\PICC\Devices\16F877a.h           [21-Feb-20 15:47  CRC=AD8E8FBD]
+    C:\Program Files (x86)\PICC\Drivers\math.h              [28-Sep-12 11:35  CRC=546412C9]
+    C:\Program Files (x86)\PICC\Drivers\lcd_c.c             [05-Sep-13 11:26  CRC=B171009B]
+
+Source signature=3BA1A3A6
+Program memory checksum=0000
+Hex file CRC=FB4A
+
+Units:
+    V:\docs external ssd\school\circuits\u2\practica14\practica14\code\practica14 (main)
+
+Compiler Settings:
+    Processor:      PIC16F877A
+    Pointer Size:   16
+    ADC Range:      0-1023
+    Opt Level:      9
+    Short,Int,Long: UNSIGNED: 1,8,16
+    Float,Double:   32,32
+    Compile Mode:       CCS5
+
+Output Files:
+    XREF file:   practica14.xsym
+    Errors:      practica14.err
+    Ext Symbols: practica14.esym
+    INHX8:       practica14.hex
+    Symbols:     practica14.sym
+    List:        practica14.lst
+    Debug/COFF:  practica14.cof
+    Project:     practica14.ccspjt
+    Call Tree:   practica14.tre
+    Statistics:  practica14.STA

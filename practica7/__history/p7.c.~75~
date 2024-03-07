@@ -1,0 +1,113 @@
+#INCLUDE <16F877a.h>
+#DEVICE ADC=10
+#USE delay(crystal=20Mhz)
+#fuses HS,NOWDT,NOPROTECT,PUT,NOLVP,NOBROWNOUT
+#use RS232(BAUD=9600, BITS=8, PARITY=N, XMIT=PIN_C6, RCV=PIN_C7)
+#include <stdio.h>
+
+#USE STANDARD_IO(B)
+#USE STANDARD_IO(C)
+#USE STANDARD_IO(D)
+
+#DEFINE M1 PIN_E0
+
+#define LCD_DATA_PORT   0X07 //Utilizar LCD en puerto C
+#define LCD_ENABLE_PIN  PIN_C5
+#define LCD_RS_PIN      PIN_C3
+#define LCD_RW_PIN      PIN_C4
+#define LCD_DATA4       PIN_D4
+#define LCD_DATA5       PIN_D5
+#define LCD_DATA6       PIN_D6
+#define LCD_DATA7       PIN_D7
+
+#include <lcd.c> 
+
+short High = 0;
+
+int16 T_HIGH;
+int16 T_LOW;
+
+char dato_rx;
+
+int16 contador=0;
+double porcentaje;
+int16 RPM;
+
+#INT_EXT
+void ext_isr(){
+   contador++;
+}
+
+#INT_TIMER0
+void ext_isr2(){
+      if(porcentaje >= 100){
+         set_timer0(T_HIGH);
+         output_high(M1);
+      return;
+      }
+      if(porcentaje == 0){
+         set_timer0(T_HIGH);
+         output_low(M1);
+      return;
+      }
+      if(High){
+       set_timer0(T_HIGH); 
+       output_high(M1);
+     }else{
+       set_timer0(T_LOW);
+       output_low(M1);
+     }
+   High++;
+}
+
+#INT_RDA
+void interrupcion_RDA(){
+ 
+   dato_rx = getc();
+   
+   if(dato_rx=='j')
+   {
+        porcentaje = getc();
+   }
+}
+
+void main(){
+   input(PIN_B0);
+
+   lcd_init();
+   
+   output_low(PIN_E0);
+   output_low(PIN_E1);
+   
+   enable_interrupts(INT_EXT);
+   
+   enable_interrupts(INT_RDA);
+   
+   setup_timer_0(RTCC_INTERNAL | RTCC_DIV_256);
+   ext_int_edge(H_TO_L);
+   enable_interrupts(INT_TIMER0);
+ 
+   enable_interrupts(GLOBAL);
+   set_timer0(255);
+   
+   printf(lcd_putc,"AC MOTOR CONTROL");
+   delay_ms(2000);
+  
+   while(1){
+   lcd_gotoxy(1,1);
+   printf(lcd_putc,"\fDC: %lf \nRPM: %lu",porcentaje, RPM);
+   delay_ms(1000);
+
+   //RPM = (float)contador/60.0*12;
+   RPM = (60 * contador)/ (5.0 * 12); // Calcular RPM
+   printf("%lu", RPM);
+   
+   contador=0;
+  
+   lcd_gotoxy(1,1);
+   printf(lcd_putc,"\fDC: %lf \nRPM: %lu",porcentaje, RPM);
+ 
+   T_LOW= (int16)(((float)porcentaje*255.0)/100);
+   T_HIGH =255-T_LOW;
+  }
+}
